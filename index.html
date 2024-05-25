@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panadería</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+        }
+        h1 {
+            margin-top: 20px;
+            color: #e74c3c;
+            font-size: 2em;
+        }
+        #cart-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.8em;
+            color: #e74c3c;
+            cursor: pointer;
+        }
+        #cart-count {
+            position: absolute;
+            top: 11px;
+            right: 11px;
+            background-color:#c0392b;
+            color: #fff;
+            border-radius: 50%;
+            padding: 0 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #products {
+            display: grid;
+    grid-template-columns: repeat(2, minmax(150px, 1fr)); /* Dos columnas */
+    grid-template-rows: repeat(2, auto); /* Dos filas */
+    gap: 20px; /* Espacio entre las tarjetas */
+        }
+        .product {
+            width: 100%;
+            max-width: none;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            padding: 15px;
+            display: flex;
+            padding: 7px;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .product img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .product-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .product-price {
+            color: #e74c3c;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #e74c3c;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            padding: 15px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        button:hover {
+            background-color: #c0392b;
+        }
+        button.loading {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        button.loading .spinner {
+            display: inline-block;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        /* Estilos para el modal del carrito */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro */
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            height: 80vh;
+            overflow-y: auto;
+            border-radius: 8px;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .cart {
+            margin-top: 0;
+        }
+        .cart h2 {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .cart-item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .cart-item-details {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        .cart-item-name {
+            margin-right: auto;
+        }
+        .cart-totals {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+        }
+        .cart-totals span {
+            font-weight: bold;
+        }
+        .cart-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin-top: 20px;
+        }
+        .clear-cart {
+            background-color: #e74c3c;
+        }
+        .clear-cart:hover {
+            background-color: #c0392b;
+        }
+        button {
+            width: 100%;
+            margin-top: 10px;
+        }
+        /* Estilos para el modal de alerta */
+        .alert-modal {
+            display: none;
+            position: fixed;
+            z-index: 2;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .alert-overlay {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro */
+        }
+        .alert-modal p {
+            margin: 0 0 20px;
+        }
+        .alert-modal button {
+            background-color: #e74c3c;
+            border: none;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .alert-modal button:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+    <h1>Panadería</h1>
+    <i id="cart-icon" class="fas fa-shopping-cart"></i>
+    <span id="cart-count">0</span>
+    <div id="products">
+        <div class="product">
+            <div class="product-details">
+                <img src="img/1.png" alt="Pan Blanco">
+                <span class="product-name">Pan Blanco</span>
+                <span class="product-price">$1.00</span>
+            </div>
+            <button onclick="handleAddToCart('Pan Blanco', 1.00)">Añadir al carrito</button>
+        </div>
+        <div class="product">
+            <div class="product-details">
+                <img src="images/pan_integral.jpg" alt="Pan Integral">
+                <span class="product-name">Pan Integral</span>
+                <span class="product-price">$1.20</span>
+            </div>
+            <button onclick="handleAddToCart('Pan Integral', 1.20)">Añadir al carrito</button>
+        </div>
+        <div class="product">
+            <div class="product-details">
+                <img src="images/pan_maiz.jpg" alt="Pan de Maíz">
+                <span class="product-name">Pan de Maíz</span>
+                <span class="product-price">$1.50</span>
+            </div>
+            <button onclick="handleAddToCart('Pan de Maíz', 1.50)">Añadir al carrito</button>
+        </div>
+        <div class="product">
+            <div class="product-details">
+                <img src="images/pan_centeo.jpg" alt="Pan de Centeno">
+                <span class="product-name">Pan de Centeno</span>
+                <span class="product-price">$1.70</span>
+            </div>
+            <button onclick="handleAddToCart('Pan de Centeno', 1.70)">Añadir al carrito</button>
+        </div>
+    </div>
+
+    <!-- Modal del carrito -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="cart">
+                <h2>Tu Carrito</h2>
+                <ul id="cart-items"></ul>
+                <div class="cart-totals">
+                    <span>Subtotal:</span>
+                    <span>$<span id="subtotal">0.00</span></span>
+                </div>
+                <div class="cart-totals">
+                    <span>Total:</span>
+                    <span>$<span id="total">0.00</span></span>
+                </div>
+                <div class="cart-actions">
+                    <button class="clear-cart" onclick="clearCart()">Vaciar Carrito</button>
+                    <button>Finalizar Compra</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de alerta -->
+    <div id="alert-overlay" class="alert-overlay"></div>
+    <div id="alert-modal" class="alert-modal">
+        <p>Producto añadido con éxito</p>
+        <button onclick="closeAlertModal()">Cerrar</button>
+    </div>
+
+    <script>
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let subtotal = 0;
+        const taxRate = 0.1;
+
+        window.onload = () => {
+            updateCart();
+        };
+
+        function handleAddToCart(productName, productPrice) {
+            const button = event.target;
+            button.classList.add('loading');
+            button.innerHTML = '<div class="spinner"></div>';
+
+            setTimeout(() => {
+                addToCart(productName, productPrice);
+                button.classList.remove('loading');
+                button.innerHTML = 'Añadir al carrito';
+                showAlertModal();
+            }, 1000); // Simula una solicitud de 1 segundo
+        }
+
+        function addToCart(productName, productPrice) {
+            let product = cart.find(item => item.name === productName);
+            if (product) {
+                product.quantity += 1;
+            } else {
+                cart.push({ name: productName, price: productPrice, quantity: 1 });
+            }
+            saveCart();
+            updateCart();
+        }
+
+        function updateCart() {
+            let cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+
+            subtotal = 0;
+            let totalQuantity = 0;
+
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+                totalQuantity += item.quantity;
+                let li = document.createElement('li');
+                li.className = 'cart-item';
+                li.innerHTML = `
+                    <div class="cart-item-details">
+                        <img src="images/${item.name.toLowerCase().replace(/ /g, '_')}.jpg" alt="${item.name}">
+                        <span class="cart-item-name">${item.name}</span>
+                        <span class="cart-item-quantity">Cantidad: ${item.quantity}</span>
+                        <span class="cart-item-price">Precio: $${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `;
+                cartItems.appendChild(li);
+            });
+
+            let total = subtotal + (subtotal * taxRate);
+            document.getElementById('subtotal').textContent = subtotal.toFixed(2);
+            document.getElementById('total').textContent = total.toFixed(2);
+            document.getElementById('cart-count').textContent = totalQuantity;
+        }
+
+        function saveCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        function clearCart() {
+            cart = [];
+            saveCart();
+            updateCart();
+        }
+
+        // Modal del carrito
+        const modal = document.getElementById("cart-modal");
+        const btn = document.getElementById("cart-icon");
+        const span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        // Modal de alerta
+        function showAlertModal() {
+            const alertModal = document.getElementById('alert-modal');
+            const alertOverlay = document.getElementById('alert-overlay');
+            alertModal.style.display = 'block';
+            alertOverlay.style.display = 'block';
+        }
+
+        function closeAlertModal() {
+            const alertModal = document.getElementById('alert-modal');
+            const alertOverlay = document.getElementById('alert-overlay');
+            alertModal.style.display = 'none';
+            alertOverlay.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
+
+
+
