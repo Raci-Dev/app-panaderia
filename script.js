@@ -1,12 +1,24 @@
-let cart = [];
-let subtotal = 0;
-let taxRate = 0.1; // Ejemplo de tasa de impuesto (10%)
 
-// Cargar el carrito desde localStorage al inicio
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let subtotal = 0;
+const taxRate = 0.1;
+
 window.onload = () => {
-    loadCart();
     updateCart();
 };
+
+function handleAddToCart(productName, productPrice) {
+    const button = event.target;
+    button.classList.add('loading');
+    button.innerHTML = '<div class="spinner"></div>';
+
+    setTimeout(() => {
+        addToCart(productName, productPrice);
+        button.classList.remove('loading');
+        button.innerHTML = 'Añadir al carrito';
+        showAlertModal();
+    }, 1000); // Simula una solicitud de 1 segundo
+}
 
 function addToCart(productName, productPrice) {
     let product = cart.find(item => item.name === productName);
@@ -24,9 +36,11 @@ function updateCart() {
     cartItems.innerHTML = '';
 
     subtotal = 0;
+    let totalQuantity = 0;
 
     cart.forEach(item => {
         subtotal += item.price * item.quantity;
+        totalQuantity += item.quantity;
         let li = document.createElement('li');
         li.className = 'cart-item';
         li.innerHTML = `
@@ -41,27 +55,51 @@ function updateCart() {
     });
 
     let total = subtotal + (subtotal * taxRate);
-
     document.getElementById('subtotal').textContent = subtotal.toFixed(2);
     document.getElementById('total').textContent = total.toFixed(2);
+    document.getElementById('cart-count').textContent = totalQuantity;
 }
 
-// Guardar el carrito en localStorage
 function saveCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Cargar el carrito desde localStorage
-function loadCart() {
-    const storedCart = localStorage.getItem('cart');
-    if (storedCart) {
-        cart = JSON.parse(storedCart);
-    }
-}
-
-// Vaciar el carrito
 function clearCart() {
     cart = [];
     saveCart();
     updateCart();
+}
+
+// Modal del carrito
+const modal = document.getElementById("cart-modal");
+const btn = document.getElementById("cart-icon");
+const span = document.getElementsByClassName("close")[0];
+
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Modal de alerta
+function showAlertModal() {
+    const alertModal = document.getElementById('alert-modal');
+    const alertOverlay = document.getElementById('alert-overlay');
+    alertModal.style.display = 'block';
+    alertOverlay.style.display = 'block';
+}
+
+function closeAlertModal() {
+    const alertModal = document.getElementById('alert-modal');
+    const alertOverlay = document.getElementById('alert-overlay');
+    alertModal.style.display = 'none';
+    alertOverlay.style.display = 'none';
 }
