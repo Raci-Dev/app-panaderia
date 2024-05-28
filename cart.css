@@ -1,292 +1,204 @@
+/* Estilos generales */
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #aaa;
+  background-color: #f9f9f9;
   color: #333;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: relative;
   min-height: 100vh;
-  padding-bottom: 100px; /* Espacio para el footer */
-  box-sizing: border-box;
 }
 
 header {
-  width: 100%;
   background-color: #e74c3c;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  box-sizing: border-box;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 2em;
-}
-
-header nav a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px;
-}
-
-header nav a:hover {
-  text-decoration: underline;
-}
-
-#cart-container {
-  position: relative;
-}
-
-#cart-icon {
-  font-size: 1.8em;
-  cursor: pointer;
-}
-
-#cart-count {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background-color: #c0392b;
   color: #fff;
-  border-radius: 50%;
-  padding: 0 5px;
-  font-size: 0.9em;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#products {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(150px, 1fr)); /* Dos columnas */
-  gap: 30px; /* Espacio entre las tarjetas */
-  justify-content: center; /* Centra las columnas horizontalmente */
-  align-items: start; /* Alinea las filas al inicio verticalmente */
-  padding: 20px; /* Espacio alrededor del contenedor para evitar que se pegue al borde */
-  box-sizing: border-box; /* Asegura que el padding se incluya en el tamaño total */
-  flex: 1; /* Permite que el contenedor crezca y ocupe el espacio disponible */
-}
-
-.product {
-  box-sizing: border-box;
-  width: 100%;
-  max-width: none;
-  background-color: #eee;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
   padding: 15px;
-  display: flex;
-  padding: 7px;
-  flex-direction: column;
-  align-items: center;
   text-align: center;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Z-index del header */
+  position: relative; /* Asegura que el z-index funcione */
 }
 
-.product img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 10px;
+main {
+  flex: 1;
+  padding: 20px;
+  margin-bottom: 120px;
 }
 
-.product-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.product-name {
-  font-size: 1.3em;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.product-price {
-  color: #e74c3c;
-  font-size: 1.2em;
-  margin-bottom: 10px;
-}
-
-button {
-  background-color: #e74c3c;
-  border: none;
-  border-radius: 4px;
+footer {
+  background-color: #333;
   color: #fff;
   padding: 15px;
-  font-size: 1.2em;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  position: relative;
+  z-index: 2;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor del carrito para centrar */
+.cart-container {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  z-index: 1000; /* Z-index alto para estar sobre el header */
 }
 
-button:hover {
-  background-color: #c0392b;
-}
-
-button.loading {
-  pointer-events: none;
-  opacity: 0.7;
-}
-
-button.loading .spinner {
-  display: inline-block;
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border: 2px solid #fff;
-  border-radius: 50%;
-  border-top-color: transparent;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
+/* Estilos para el contenedor del carrito */
 .cart {
-  margin-top: 20px;
-  width: 80%;
-  max-width: 800px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  padding: 20px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  width: 90%;
+  max-width: 500px; /* Ancho máximo para el carrito */
+  position: relative;
 }
 
-.cart h2 {
+.cart.hidden {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+/* Título del carrito */
+.cart-title {
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  padding: 10px 0;
   text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+  z-index: 1; /* Asegura que esté por encima del contenido del carrito */
 }
 
+/* Estilos para los elementos del carrito */
 .cart-item {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
+  align-items: flex-start;
+  margin-bottom: 20px;
   border-bottom: 1px solid #eee;
-}
-
-.cart-item:last-child {
-  border-bottom: none;
+  padding-bottom: 20px;
 }
 
 .cart-item img {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
-  border-radius: 4px;
-  margin-right: 10px;
+  border-radius: 8px;
+  margin-right: 20px;
 }
 
 .cart-item-details {
-  display: flex;
-  align-items: center;
   flex: 1;
 }
 
 .cart-item-name {
-  margin-right: auto;
-}
-
-.cart-item-quantity {
-  display: flex;
-  align-items: center;
-}
-
-.cart-item-quantity button {
-  background-color: #e74c3c;
-  border: none;
-  color: white;
-  padding: 5px;
-  cursor: pointer;
-  margin: 0 5px;
-}
-
-.cart-totals {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-top: 1px solid #eee;
-  margin-top: 20px;
-}
-
-.cart-totals span {
   font-weight: bold;
+  margin-bottom: 5px;
+  font-size: 1.1rem;
 }
 
-.cart-actions {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  margin-top: 20px;
+.cart-item-price {
+  color: #e74c3c;
+  margin-bottom: 5px;
+  font-size: 1.1rem;
 }
 
-.clear-cart {
-  background-color: #e74c3c;
-}
-
-.clear-cart:hover {
-  background-color: #c0392b;
-}
-
-button {
-  width: 100%;
-  margin-top: 10px;
-}
-
-footer {
-  background-color: #e74c3c;
-  color: white;
-  text-align: center;
-  padding: 10px 0;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-footer a {
-  color: white;
-  text-decoration: underline;
-}
-
-footer a:hover {
-  color: #c0392b;
-}
-
-
-
-/* Estilos para los inputs de cantidad */
 .cart-item-quantity {
   width: 50px;
-  padding: 5px;
+  padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-size: 16px;
   text-align: center;
-  margin-right: 10px;
+  margin-bottom: 5px;
 }
 
-/* Estilos para los botones de eliminar */
 .remove-item {
-  background-color: #e74c3c;
-  color: #fff;
+  background-color: transparent;
   border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: transform 0.3s ease;
+}
+
+.remove-item svg {
+  width: 24px;
+  height: 24px;
+  fill: #e74c3c;
 }
 
 .remove-item:hover {
+  transform: scale(1.2);
+}
+
+/* Estilos para los botones de acciones */
+.cart-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.cart-actions button {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.cart-actions button:hover {
   background-color: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* Estilos para los totales */
+.cart-totals {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* Estilos para la versión móvil */
+@media screen and (max-width: 768px) {
+  .cart-item img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .cart-item-quantity {
+    width: 40px;
+    padding: 6px;
+    font-size: 14px;
+  }
+
+  .remove-item svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cart-actions button {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
 }
