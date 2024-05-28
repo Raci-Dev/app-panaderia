@@ -1,6 +1,6 @@
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #333;
+  background-color: #aaa;
   color: #333;
   margin: 0;
   padding: 0;
@@ -12,6 +12,7 @@ body {
   padding-bottom: 100px; /* Espacio para el footer */
   box-sizing: border-box;
 }
+
 header {
   width: 100%;
   background-color: #e74c3c;
@@ -28,20 +29,30 @@ header h1 {
   font-size: 2em;
 }
 
+header nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
 #cart-container {
   position: relative;
 }
 
 #cart-icon {
   font-size: 1.8em;
-  color: #fff;
   cursor: pointer;
 }
+
 #cart-count {
   position: absolute;
   top: -10px;
   right: -10px;
-  background-color: #333;
+  background-color: #c0392b;
   color: #fff;
   border-radius: 50%;
   padding: 0 5px;
@@ -51,18 +62,18 @@ header h1 {
   align-items: center;
   justify-content: center;
 }
+
 #products {
   display: grid;
   grid-template-columns: repeat(2, minmax(150px, 1fr)); /* Dos columnas */
-  padding: 20px;
   gap: 30px; /* Espacio entre las tarjetas */
   justify-content: center; /* Centra las columnas horizontalmente */
   align-items: start; /* Alinea las filas al inicio verticalmente */
   padding: 20px; /* Espacio alrededor del contenedor para evitar que se pegue al borde */
   box-sizing: border-box; /* Asegura que el padding se incluya en el tamaño total */
-  flex: 1;
-  margin-bottom: 20px;
+  flex: 1; /* Permite que el contenedor crezca y ocupe el espacio disponible */
 }
+
 .product {
   box-sizing: border-box;
   width: 100%;
@@ -70,6 +81,7 @@ header h1 {
   background-color: #eee;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
   padding: 15px;
   display: flex;
   padding: 7px;
@@ -77,6 +89,7 @@ header h1 {
   align-items: center;
   text-align: center;
 }
+
 .product img {
   width: 150px;
   height: 150px;
@@ -84,21 +97,25 @@ header h1 {
   border-radius: 8px;
   margin-bottom: 10px;
 }
+
 .product-details {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .product-name {
   font-size: 1.3em;
   font-weight: bold;
   margin-bottom: 5px;
 }
+
 .product-price {
   color: #e74c3c;
   font-size: 1.2em;
   margin-bottom: 10px;
 }
+
 button {
   background-color: #e74c3c;
   border: none;
@@ -114,13 +131,16 @@ button {
   justify-content: center;
   align-items: center;
 }
+
 button:hover {
   background-color: #c0392b;
 }
+
 button.loading {
   pointer-events: none;
   opacity: 0.7;
 }
+
 button.loading .spinner {
   display: inline-block;
   position: absolute;
@@ -131,53 +151,22 @@ button.loading .spinner {
   border-top-color: transparent;
   animation: spin 1s linear infinite;
 }
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-/* Estilos para el modal del carrito */
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro */
-  padding-top: 60px;
-}
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 400px;
-  height: 80vh;
-  overflow-y: auto;
-  border-radius: 8px;
-}
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
+
 .cart {
-  margin-top: 0;
+  margin-top: 20px;
+  width: 80%;
+  max-width: 800px;
 }
+
 .cart h2 {
-  margin-bottom: 20px;
   text-align: center;
 }
+
 .cart-item {
   display: flex;
   justify-content: space-between;
@@ -185,9 +174,11 @@ button.loading .spinner {
   padding: 10px 0;
   border-bottom: 1px solid #eee;
 }
+
 .cart-item:last-child {
   border-bottom: none;
 }
+
 .cart-item img {
   width: 50px;
   height: 50px;
@@ -195,14 +186,31 @@ button.loading .spinner {
   border-radius: 4px;
   margin-right: 10px;
 }
+
 .cart-item-details {
   display: flex;
   align-items: center;
   flex: 1;
 }
+
 .cart-item-name {
   margin-right: auto;
 }
+
+.cart-item-quantity {
+  display: flex;
+  align-items: center;
+}
+
+.cart-item-quantity button {
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
 .cart-totals {
   display: flex;
   justify-content: space-between;
@@ -210,62 +218,29 @@ button.loading .spinner {
   border-top: 1px solid #eee;
   margin-top: 20px;
 }
+
 .cart-totals span {
   font-weight: bold;
 }
+
 .cart-actions {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   margin-top: 20px;
 }
+
 .clear-cart {
   background-color: #e74c3c;
 }
+
 .clear-cart:hover {
   background-color: #c0392b;
 }
+
 button {
   width: 100%;
   margin-top: 10px;
-}
-/* Estilos para el modal de alerta */
-.alert-modal {
-  display: none;
-  position: fixed;
-  z-index: 2;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  border: 1px solid #888;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.alert-overlay {
-  display: none;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro */
-}
-.alert-modal p {
-  margin: 0 0 20px;
-}
-.alert-modal button {
-  background-color: #e74c3c;
-  border: none;
-  color: #fff;
-  padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-.alert-modal button:hover {
-  background-color: #c0392b;
 }
 
 footer {
@@ -286,4 +261,32 @@ footer a {
 
 footer a:hover {
   color: #c0392b;
+}
+
+
+
+/* Estilos para los inputs de cantidad */
+.cart-item-quantity {
+  width: 50px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: center;
+  margin-right: 10px;
+}
+
+/* Estilos para los botones de eliminar */
+.remove-item {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-item:hover {
+  background-color: #c0392b;
 }

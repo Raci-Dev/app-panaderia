@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="cart.css">
+    <script defer src="cart.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Tu carrito</h1>
+        <nav>
+            <a href="index.html">Inicio</a>
+        </nav>
+    </header>
+    <main>
+        <div class="cart">
+            <h2>Agregados</h2>
+            <ul id="cart-items"></ul>
+            <div class="cart-totals">
+                <span>Subtotal:</span>
+                <span>$<span id="subtotal">0.00</span></span>
+            </div>
+            <div class="cart-totals">
+                <span>Total:</span>
+                <span>$<span id="total">0.00</span></span>
+            </div>
+            <div class="cart-actions">
+                <button class="clear-cart" onclick="clearCart()">Vaciar Carrito</button>
+                <button>Finalizar Compra</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Panadería. Todos los derechos reservados.</p>
+        <p>Contacto: <a href="mailto:info@panaderia.com">info@panaderia.com</a></p>
+    </footer>
+</body>
+</html>
