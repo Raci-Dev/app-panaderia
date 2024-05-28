@@ -11,14 +11,14 @@ body {
 }
 
 header {
+  width: 100%;
   background-color: #e74c3c;
-  color: #fff;
-  padding: 15px;
-  text-align: center;
-  font-size: 1.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 10; /* Z-index del header */
-  position: relative; /* Asegura que el z-index funcione */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  box-sizing: border-box;
 }
 
 main {
@@ -28,16 +28,23 @@ main {
 }
 
 footer {
-  background-color: #333;
-  color: #fff;
-  padding: 15px;
+  background-color: #e74c3c;
+  color: white;
   text-align: center;
-  position: fixed;
+  padding: 10px 0;
+  width: 100%;
+  position: absolute;
   bottom: 0;
   left: 0;
-  width: 100%;
-  z-index: 2;
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+footer a {
+  color: white;
+  text-decoration: underline;
+}
+
+footer a:hover {
+  color: #c0392b;
 }
 
 /* Contenedor del carrito para centrar */
