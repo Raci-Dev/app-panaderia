@@ -1,96 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-	<link rel="stylesheet" href="style.css">
-    <script defer src="script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - Panadería</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
-
     <header>
-        <h1>Panaderia Teza</h1>
-        <div id="cart-container" onclick="redirectToCart()">
-            <i id="cart-icon" class="fas fa-shopping-cart"></i>
-            <span id="cart-count">0</span>
-        </div>
+        <h1></h1>
+        <nav>
+            <a href="report.html"><i class="fas fa-chart-line"></i> Reportes</a>
+            <a href="#" id="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="cart-count">0</span>
+            </a>
+        </nav>
     </header>
-   
-    <div id="products">
-        <div class="product">
-            <div class="product-details">
-                <img src="img/pan.png" alt="Pan Blanco">
-                <span class="product-name">Pan Blanco</span>
-                <span class="product-price">$1.00</span>
-            </div>
-            <button onclick="handleAddToCart('Pan Blanco', 1.00, 'img/pan.png')">Añadir al carrito</button>
-        </div>
-        <div class="product">
-            <div class="product-details">
-                <img src="img/pan.png" alt="Pan Integral">
-                <span class="product-name">Pan Integral</span>
-                <span class="product-price">$1.20</span>
-            </div>
-            <button onclick="handleAddToCart('Pan Integral', 1.20, 'img/pan.png')">Añadir al carrito</button>
-        </div>
-        <div class="product">
-            <div class="product-details">
-                <img src="img/pan.png" alt="Pan de Maíz">
-                <span class="product-name">Pan de Maíz</span>
-                <span class="product-price">$1.50</span>
-            </div>
-            <button onclick="handleAddToCart('Pan de Maíz', 1.50, 'img/pan.png')">Añadir al carrito</button>
-        </div>
-        <div class="product">
-            <div class="product-details">
-                <img src="img/pan.png" alt="Pan de Centeno">
-                <span class="product-name">Pan de Centeno</span>
-                <span class="product-price">$1.70</span>
-            </div>
-            <button onclick="handleAddToCart('Pan de Centeno', 1.70, 'img/pan.png')">Añadir al carrito</button>
-        </div>
-    </div>
+    <main>
+        <section id="products">
 
-    <!-- Modal del carrito -->
+            <div class="product" data-id="1" data-name="Pan Blanco" data-price="1.00">
+                <img src="img/pan.png" alt="Pan Blanco">
+                <h3>Pan Blanco</h3>
+                <p>$1.00</p>
+                <button class="add-to-cart"><i class="fas fa-cart-plus"></i> Agregar</button>
+            </div>
+            <div class="product" data-id="2" data-name="Pan Integral" data-price="1.50">
+                <img src="img/pan.png" alt="Pan Integral">
+                <h3>Pan Integral</h3>
+                <p>$1.50</p>
+                <button class="add-to-cart"><i class="fas fa-cart-plus"></i> Agregar</button>
+            </div>
+            <div class="product" data-id="3" data-name="Pan de Centeno" data-price="2.00">
+                <img src="img/pan.png" alt="Pan de Centeno">
+                <h3>Pan de Centeno</h3>
+                <p>$2.00</p>
+                <button class="add-to-cart"><i class="fas fa-cart-plus"></i> Agregar</button>
+            </div>
+            <div class="product" data-id="4" data-name="Pan Dulce" data-price="2.50">
+                <img src="img/pan.png" alt="Pan Dulce">
+                <h3>Pan Dulce</h3>
+                <p>$2.50</p>
+                <button class="add-to-cart"><i class="fas fa-cart-plus"></i> Agregar</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal del Carrito -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <div class="cart">
-                <h2>Tu Carrito</h2>
-                <ul id="cart-items"></ul>
-                <div class="cart-totals">
-                    <span>Subtotal:</span>
-                    <span>$<span id="subtotal">0.00</span></span>
-                </div>
-                <div class="cart-totals">
-                    <span>Total:</span>
-                    <span>$<span id="total">0.00</span></span>
-                </div>
-                <div class="cart-actions">
-                    <button class="clear-cart" onclick="clearCart()">Vaciar Carrito</button>
-                    <button>Finalizar Compra</button>
-                </div>
-            </div>
+            <h2>Carrito de Compras</h2>
+            <ul id="cart-items"></ul>
+            <p>Total: $<span id="total-price">0.00</span></p>
+            <button id="checkout">Finalizar Compra</button>
         </div>
     </div>
 
-    <!-- Modal de alerta -->
-    <div id="alert-overlay" class="alert-overlay"></div>
-    <div id="alert-modal" class="alert-modal">
-        <p>Producto añadido con éxito</p>
-        <button onclick="closeAlertModal()">Cerrar</button>
-    </div>
-
-    <!-- Footer -->
-<footer>
-    <p>&copy; 2024 Panadería. Todos los derechos reservados.</p>
-    <p>Contacto: <a href="mailto:info@panaderia.com">info@panaderia.com</a></p>
-</footer>
-
-<script src="cart.js"></script>
-	
+    <script src="script.js"></script>
 </body>
 </html>
