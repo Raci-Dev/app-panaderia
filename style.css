@@ -8,11 +8,11 @@ body {
 }
 
 header {
-  background-color: #ff6f61;
+  background-image: linear-gradient(to top, #ff6f61, #ff415d);
   color: white;
   text-align: center;
   padding: 1.5em 0;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0px 5px 10px rgba(0,0,0,0.3);
   position: relative;
 }
 
@@ -26,6 +26,7 @@ nav {
 
 nav a {
   color: white;
+  font-weight: bold;
   margin: 0 10px;
   text-decoration: none;
   font-size: 1.2em;
@@ -37,7 +38,7 @@ nav a {
 }
 
 #cart-count {
-  background-color: #ff6f61;
+  background-image: linear-gradient(to top, #ff6f61, #ff415d);
   color: white;
   font-weight: bold;
   border-radius: 100%;
@@ -131,6 +132,7 @@ section {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #ddd;
 }
 
 #cart-items img {
@@ -138,6 +140,47 @@ section {
   margin-right: 10px;
   border-radius: 4px;
 }
+
+button:disabled {
+  background-color: #007bff; /* Mismo color de fondo que los botones habilitados */
+    opacity: 0.5; /* Hacer el botón más opaco */
+    cursor: not-allowed; /* Cambiar el cursor para indicar que está deshabilitado */
+}
+
+#total-price-container {
+  margin-top: 20px;
+  text-align: end;
+  font-size: 22px;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo más opaco */;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.cart-item-quantity button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  font-size: 16px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cart-item-details {
+  flex-grow: 1;
+  white-space: nowrap;         /* Evita que el texto se envuelva */
+  overflow: hidden;            /* Oculta el texto que no cabe */
+  text-overflow: ellipsis;     /* Añade los puntos suspensivos */
+}
+
+.cart-item-quantity button:hover {
+  background-color: #0056b3;
+}
+
 
 #cart-items .cart-item-details {
   flex-grow: 1;
@@ -149,17 +192,25 @@ section {
 }
 
 #cart-items .cart-item-quantity input {
-  width: 50px;
+  width: 40px;
   text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
   margin: 0 5px;
 }
 
 #cart-items .remove-item {
-  background: none;
+  background-color: #dc3545;
   border: none;
-  color: #dc3545;
-  font-size: 1.2em;
+  color: #fff;
+  padding: 5px 10px;
+  margin-left: 10px;
+  border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 #cart-items .remove-item:hover {
@@ -191,6 +242,13 @@ section {
 
 #checkout, #empty-cart {
   display: inline-block;
+}
+
+#cart-empty-message {
+  text-align: center;
+  color: #999;
+  font-size: 1.2em;
+  margin-top: 20px;
 }
 
 .sales-query {
@@ -273,4 +331,21 @@ section {
   color: black;
   text-decoration: none;
   cursor: pointer;
+}
+
+
+
+footer {
+    background-image: linear-gradient(to bottom, #ff6f61, #ff415d); /* Degradado de arriba hacia abajo */
+    color: white; /* Color de texto */
+    text-align: center;
+    padding: 1.5em 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+}
+
+footer p {
+  margin: 0;
 }

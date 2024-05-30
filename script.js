@@ -7,12 +7,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartCount = document.getElementById('cart-count');
     const modal = document.getElementById('cart-modal');
     const closeModal = document.querySelector('.close');
+    const cartEmptyMessage = document.getElementById('cart-empty-message');
+    const emptyCartButton = document.getElementById('empty-cart');
+    const checkoutButton = document.getElementById('checkout');
 
     function updateCart() {
         const cartItemsContainer = document.getElementById('cart-items');
         const totalPriceContainer = document.getElementById('total-price');
         cartItemsContainer.innerHTML = '';
         let totalPrice = 0;
+
+
+        if (cart.length === 0) {
+            cartEmptyMessage.style.display = 'block';
+            emptyCartButton.disabled = true;
+            checkoutButton.disabled = true;
+        } else {
+            cartEmptyMessage.style.display = 'none';
+            emptyCartButton.disabled = false;
+            checkoutButton.disabled = false;
+        }
+
 
         cart.forEach((item, index) => {
             const li = document.createElement('li');
@@ -66,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             localStorage.setItem('cart', JSON.stringify(cart));
-            alert(`${productName} agregado al carrito`);
             updateCart();
         });
     });
@@ -107,14 +121,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('empty-cart').addEventListener('click', () => {
-        if (confirm('¿Estás seguro de que deseas vaciar el carrito?')) {
-            cart.length = 0;
-            localStorage.removeItem('cart');
-            updateCart();
-        }
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción vaciará todo el carrito.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, vaciar carrito',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                cart.length = 0;
+                localStorage.removeItem('cart');
+                updateCart();
+                Swal.fire(
+                    'Carrito vaciado',
+                    'Tu carrito ha sido vaciado.',
+                    'success'
+                )
+            }
+        });
     });
 
-    document.getElementById('checkout').addEventListener('click', () => {
+    checkoutButton.addEventListener('click', () => {
         if (cart.length === 0) {
             alert('El carrito está vacío.');
             return;
@@ -129,7 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sales.push(sale);
         localStorage.setItem('sales', JSON.stringify(sales));
         localStorage.removeItem('cart');
-        alert('Compra finalizada. Gracias por su compra!');
         cart.length = 0;
         updateCart();
         modal.style.display = 'none';
