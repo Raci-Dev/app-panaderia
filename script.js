@@ -145,13 +145,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     checkoutButton.addEventListener('click', () => {
-        if (cart.length === 0) {
-            alert('El carrito está vacío.');
-            return;
-        }
-
         const sale = {
-            date: new Date().toISOString(),
+            date: new Date().toISOString(),  // Almacenar fecha en formato ISO
             items: [...cart],
             total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
         };
@@ -166,4 +161,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
     updateCart();
 });
-

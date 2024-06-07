@@ -1,0 +1,154 @@
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+  color: #333;
+  padding: 0;
+  margin: 0;
+}
+
+header {
+  background-image: linear-gradient(to top, #ff6f61, #ff415d);
+  color: white;
+  text-align: center;
+  padding: 1.5em 0;
+  position: relative;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header nav {
+  margin-top: 10px;
+}
+
+header nav a {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+header nav a:hover {
+  text-decoration: underline;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+@media(min-width: 768px) {
+  main {
+      grid-template-columns: 1fr 2fr;
+  }
+}
+
+#report-filters {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+#report-filters label {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+  font-weight: bold;
+}
+
+#report-filters input,
+#report-filters button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+#report-filters button {
+  background: #35424a;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+#report-filters button:hover {
+  background: #45a049;
+}
+
+/* Estilos para la sección de resultados del reporte */
+#report-results {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  overflow-x: auto; /* Permitir scroll horizontal */
+  -webkit-overflow-scrolling: touch; /* Desplazamiento suave en iOS */
+  max-height: calc(100vh - 150px); /* Limitar la altura máxima */
+  justify-content: center;
+
+}
+
+#report-results h2 {
+  margin-bottom: 20px;
+}
+
+/* Estilos para la tabla de resultados */
+#report-table {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  border-collapse: collapse;
+  border: none; /* Eliminar bordes de la tabla */
+  table-layout: fixed; /* Fijar el ancho de las columnas */
+  justify-content: center;
+}
+
+#report-table th,
+#report-table td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd; /* Agregar bordes a las celdas */
+}
+
+#report-table th {
+  background-color: #bd2130;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+#report-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Estilos para el contenedor del total de ventas */
+#total-sales-container {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+footer {
+  background-image: linear-gradient(to bottom, #ff6f61, #ff415d); /* Degradado de arriba hacia abajo */
+  color: white; /* Color de texto */
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+footer p {
+margin: 0;
+}

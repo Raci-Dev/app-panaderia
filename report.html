@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes de Ventas</title>
+    <link rel="stylesheet" href="report.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+    <header>
+        <h1>Reportes de Ventas</h1>
+        <nav>
+            <a href="index.html"><i class="fas fa-home"></i> Inicio</a>
+        </nav>
+    </header>
+    <main> 
+    <section id="report-filters">
+        <label for="start-date">Fecha Inicio:</label>
+        <input type="date" id="start-date">
+        <label for="end-date">Fecha Fin:</label>
+        <input type="date" id="end-date">
+        <button id="generate-report">Generar Reporte</button>
+    </section>
+    <section id="report-results">
+        <h2>Resultados del Reporte</h2>
+        <ul id="report-items"></ul>
+        <div id="total-sales-container">
+            <strong>Total de Ventas:</strong> <span id="total-sales">0.00</span>
+        </div>
+    </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Panadería</p>
+    </footer>
+
+    <script src="report.js"></script>
+</body>
+</html>
